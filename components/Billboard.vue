@@ -23,11 +23,14 @@ export default {
   }
 
   &__title {
+    font-size: 6rem;
     color: #fff;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-align: center;
+    width: 80%;
   }
 }
 </style>

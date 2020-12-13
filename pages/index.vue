@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">
-    <Billboard />
-    <PostsSlider />
+    <Billboard class="home-page__block" />
+    <PostsSlider class="home-page__block" />
   </div>
 </template>
 
@@ -14,4 +14,10 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.home-page {
+  &__block {
+    margin-bottom: 72px;
+  }
+}
+</style>
