@@ -1,13 +1,22 @@
 <template>
   <div class="billboard">
     <img src="/girl-4898696_1920.jpg" alt="girl" class="billboard__image" />
-    <h1 class="billboard__title">Очень, очень важный заголовок</h1>
+    <h1 class="billboard__title">{{ title }}</h1>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Billboard',
+  async fetch() {
+    // получили откуда-то из api
+    this.title = await Promise.resolve('Очень, очень важный заголовок')
+  },
+  data() {
+    return {
+      title: '',
+    }
+  },
 }
 </script>
 
