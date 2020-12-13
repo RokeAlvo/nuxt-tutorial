@@ -1,6 +1,7 @@
 <template>
   <nuxt-link :to="{}" class="post-card">
     <p class="post-card__title">{{ post.title }}</p>
+    <p class="post-card__comment">{{ firstComment }}</p>
     <p class="post-card__user">Author ID: {{ post.userId }}</p>
   </nuxt-link>
 </template>
@@ -12,6 +13,11 @@ export default {
     post: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    firstComment() {
+      return this.post?.comments?.[0]?.body
     },
   },
 }
@@ -26,7 +32,7 @@ export default {
   grid-gap: 16px;
   color: black;
   text-decoration: unset;
-
+  height: 100%;
   &__title {
     font-weight: bold;
   }

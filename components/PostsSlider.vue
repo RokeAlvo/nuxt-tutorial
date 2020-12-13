@@ -20,22 +20,31 @@ export default {
   components: { PostCard },
   async fetch() {
     this.allPosts = await this.$http.$get('/posts')
+    this.postsWithComments = await Promise.all(
+      this.allPosts.map(async (post) => {
+        return {
+          ...post,
+          comments: await this.$http.$get(`/posts/${post.id}/comments`),
+        }
+      })
+    )
   },
   data() {
     return {
-      allPosts: {
-        type: Array,
-        default: () => [],
-      },
+      allPosts: [],
+      postsWithComments: [],
       swiperOptions: {
         slidesPerView: 4,
         spaceBetween: 40,
+        loop: true,
       },
     }
   },
   computed: {
     postsToShow() {
-      return this.allPosts.length ? this.allPosts.slice(0, 10) : []
+      return this.postsWithComments.length
+        ? this.postsWithComments.slice(0, 10)
+        : []
     },
   },
 }
@@ -49,6 +58,10 @@ export default {
   &__title {
     font-size: 3rem;
     margin-bottom: 40px;
+  }
+
+  .swiper-slide {
+    min-height: 100%;
   }
 }
 </style>

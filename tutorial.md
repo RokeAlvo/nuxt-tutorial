@@ -192,6 +192,9 @@ export default {
 
 тут то же все тривиально: заголовок и слайдер
 
+Получаем посты с api, т.к. бекенд не умеет в пагинацию, заводим
+вычисляемое свойство, в котором берем первых десять постов.
+
 Слайдер возьмем самый популярный https://github.com/surmon-china/vue-awesome-swiper .
 Подключаем его через плагин, как написано в документации.
 упс. что-то в консоли красное и не понятное... 
@@ -200,4 +203,4 @@ export default {
 [Vue warn]: The client-side rendered virtual DOM tree is not matching server-rendered content. This is likely caused by incorrect HTML markup, for example nesting block-level elements inside <p>, or missing <tbody>. Bailing hydration and performing full client-side render.
 ```
 
-читаем доку, ага, у нас же ssr, нужно добавить client-only
+Читаем доку, ага, у нас же ssr, а плагин работает только на клиенте, нужно добавить client-only
