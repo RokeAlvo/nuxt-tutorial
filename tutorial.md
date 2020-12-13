@@ -130,4 +130,74 @@ export default {
 </style>
 ```
 
-Логика работы такая, получаем с api заголовок, отображаем блок.
+Логика работы такая: получаем с api заголовок, отображаем блок.
+
+
+#### PostsSlider
+
+```vue
+<template>
+  <div class="posts-slider">
+    <h2 class="posts-slider__title">Наши последние посты:</h2>
+    <div class="posts-slider__swiper">
+        <Swiper ref="mySwiper" :options="swiperOptions" class="swiper">
+          <SwiperSlide v-for="post in postsToShow" :key="post.id">
+            <PostCard :post="post" />
+          </SwiperSlide>
+        </Swiper>
+    </div>
+  </div>
+</template>
+
+<script>
+import PostCard from '~/components/PostCard'
+export default {
+  name: 'PostsSlider',
+  components: { PostCard },
+  async fetch() {
+    this.allPosts = await this.$http.$get('/posts')
+  },
+  data() {
+    return {
+      allPosts: {
+        type: Array,
+        default: () => [],
+      },
+      swiperOptions: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+    }
+  },
+  computed: {
+    postsToShow() {
+      return this.allPosts.length ? this.allPosts.slice(0, 10) : []
+    },
+  },
+}
+</script>
+
+<style lang="scss">
+.posts-slider {
+  padding: 0 96px;
+  max-width: 1200px;
+  margin: auto;
+  &__title {
+    font-size: 3rem;
+    margin-bottom: 40px;
+  }
+}
+</style>
+```
+
+тут то же все тривиально: заголовок и слайдер
+
+Слайдер возьмем самый популярный https://github.com/surmon-china/vue-awesome-swiper .
+Подключаем его через плагин, как написано в документации.
+упс. что-то в консоли красное и не понятное... 
+
+```
+[Vue warn]: The client-side rendered virtual DOM tree is not matching server-rendered content. This is likely caused by incorrect HTML markup, for example nesting block-level elements inside <p>, or missing <tbody>. Bailing hydration and performing full client-side render.
+```
+
+читаем доку, ага, у нас же ssr, нужно добавить client-only
